@@ -393,6 +393,32 @@ export function validateConfig<T extends ConfigSchema>(
 }
 
 /**
+ * Extend an existing config schema with additional fields or overridden defaults.
+ * Returns a new schema (does not mutate the original).
+ *
+ * @example
+ * ```ts
+ * // Plugin defines base schema
+ * const baseSchema = {
+ *   name: config.string('APP_NAME', 'FluxStack'),
+ *   port: config.number('PORT', 3000),
+ * }
+ *
+ * // App extends with extra fields and overrides defaults
+ * const appConfig = defineConfig(extendConfig(baseSchema, {
+ *   name: config.string('APP_NAME', 'MyApp'),      // override default
+ *   debug: config.boolean('DEBUG', false),           // new field
+ * }))
+ * ```
+ */
+export function extendConfig<
+  TBase extends ConfigSchema,
+  TExt extends ConfigSchema,
+>(base: TBase, extension: TExt): TBase & TExt {
+  return { ...base, ...extension }
+}
+
+/**
  * Create nested config schema (for grouping)
  */
 export function defineNestedConfig<T extends Record<string, ConfigSchema>>(

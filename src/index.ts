@@ -23,6 +23,7 @@ export {
   defineConfig,
   defineReactiveConfig,
   defineNestedConfig,
+  extendConfig,
   validateConfig,
   ReactiveConfig,
   config,
