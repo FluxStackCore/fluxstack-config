@@ -357,6 +357,66 @@ describe('@fluxstack/config', () => {
     })
   })
 
+  describe('boolean casting — falsy string values', () => {
+    afterEach(() => {
+      clearEnv('__TEST_BOOL_FALSE')
+      clearEnv('__TEST_BOOL_ZERO')
+      clearEnv('__TEST_BOOL_NO')
+      clearEnv('__TEST_BOOL_OFF')
+      clearEnv('__TEST_BOOL_EMPTY')
+    })
+
+    it('castValue("false") should return false, not true', () => {
+      setEnv('__TEST_BOOL_FALSE', 'false')
+
+      const cfg = defineConfig({
+        flag: config.boolean('__TEST_BOOL_FALSE', false),
+      })
+
+      expect(cfg.flag).toBe(false)
+    })
+
+    it('castValue("0") should return false', () => {
+      setEnv('__TEST_BOOL_ZERO', '0')
+
+      const cfg = defineConfig({
+        flag: config.boolean('__TEST_BOOL_ZERO', true),
+      })
+
+      expect(cfg.flag).toBe(false)
+    })
+
+    it('castValue("no") should return false', () => {
+      setEnv('__TEST_BOOL_NO', 'no')
+
+      const cfg = defineConfig({
+        flag: config.boolean('__TEST_BOOL_NO', true),
+      })
+
+      expect(cfg.flag).toBe(false)
+    })
+
+    it('castValue("off") should return false', () => {
+      setEnv('__TEST_BOOL_OFF', 'off')
+
+      const cfg = defineConfig({
+        flag: config.boolean('__TEST_BOOL_OFF', true),
+      })
+
+      expect(cfg.flag).toBe(false)
+    })
+
+    it('castValue("FALSE") should return false (case-insensitive)', () => {
+      setEnv('__TEST_BOOL_FALSE', 'FALSE')
+
+      const cfg = defineConfig({
+        flag: config.boolean('__TEST_BOOL_FALSE', true),
+      })
+
+      expect(cfg.flag).toBe(false)
+    })
+  })
+
   describe('standalone helpers (envString, etc.)', () => {
     it('envString works like config.string', () => {
       const field = envString('X', 'val')

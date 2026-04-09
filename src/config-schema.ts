@@ -136,7 +136,8 @@ function castValue(value: unknown, type: ConfigFieldType): unknown {
     case 'boolean':
       if (typeof value === 'boolean') return value
       if (typeof value === 'string') {
-        return ['true', '1', 'yes', 'on'].includes(value.toLowerCase())
+        if (['true', '1', 'yes', 'on'].includes(value.toLowerCase())) return true
+        if (['false', '0', 'no', 'off', ''].includes(value.toLowerCase())) return false
       }
       return Boolean(value)
 
