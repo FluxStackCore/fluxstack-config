@@ -1,6 +1,6 @@
 {
   "name": "@fluxstack/config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Declarative configuration system for FluxStack — schema-based, type-safe, with env var mapping and validation",
   "type": "module",
   "main": "./dist/index.cjs",
